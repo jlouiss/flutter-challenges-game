@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:game/constants.dart';
+import 'package:game/story_brain.dart';
+
+StoryBrain storyBrain = StoryBrain(defaultStoryList);
 
 void main() => runApp(Game());
 
@@ -36,7 +40,7 @@ class _StoryPageState extends State<StoryPage> {
                 flex: 12,
                 child: Center(
                   child: Text(
-                    'Story text will go here.',
+                    storyBrain.getStoryTitle(),
                     style: TextStyle(
                       fontSize: 25.0,
                     ),
@@ -45,15 +49,20 @@ class _StoryPageState extends State<StoryPage> {
               ),
               Expanded(
                 flex: 2,
-                child: FlatButton(
-                  onPressed: () {
-                    //Choice 1 made by user.
-                  },
-                  color: Colors.red,
-                  child: Text(
-                    'Choice 1',
-                    style: TextStyle(
-                      fontSize: 20.0,
+                child: Visibility(
+                  visible: storyBrain.shouldButtonBeVisible(1),
+                  child: FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        storyBrain.nextStory(1);
+                      });
+                    },
+                    color: Colors.red,
+                    child: Text(
+                      storyBrain.getOption1(),
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
                     ),
                   ),
                 ),
@@ -63,15 +72,20 @@ class _StoryPageState extends State<StoryPage> {
               ),
               Expanded(
                 flex: 2,
-                child: FlatButton(
-                  onPressed: () {
-                    //Choice 2 made by user.
-                  },
-                  color: Colors.blue,
-                  child: Text(
-                    'Choice 2',
-                    style: TextStyle(
-                      fontSize: 20.0,
+                child: Visibility(
+                  visible: storyBrain.shouldButtonBeVisible(2),
+                  child: FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        storyBrain.nextStory(2);
+                      });
+                    },
+                    color: Colors.blue,
+                    child: Text(
+                      storyBrain.getOption2(),
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
                     ),
                   ),
                 ),
